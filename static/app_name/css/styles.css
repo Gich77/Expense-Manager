@@ -1,0 +1,28 @@
+body {
+    background-color: #f8f9fa;
+}
+.card {
+    border-radius: 8px;
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.expense-card {
+    flex: 1 1 calc(33.33% - 16px);
+    border: 1px solid #ddd;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

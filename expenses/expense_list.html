@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block title %}My Expenses{% endblock %}
+
+{% block content %}
+<h2>My Expenses</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in page_obj %}
+        <tr>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.get_category_display }}</td>
+            <td>
+                <a href="{% url 'update_expense' expense.id %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'delete_expense' expense.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li> class="page-item">
+        {% endif %}
+        {% for page in page_obj.paginator.page_range %}
+        <li {% if page_obj.number == page %}class="active"{% endif %}>
+            <a href="?page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+    <div class="grid-container">
+    {% for expense in page_obj %}
+    <div class="expense-card">
+        <h4>{{ expense.title }}</h4>
+        <p><strong>Amount:</strong> {{ expense.amount }}</p>
+        <p><strong>Date:</strong> {{ expense.date }}</p>
+        <p><strong>Category:</strong> {{ expense.get_category_display }}</p>
+        <div>
+            <a href="{% url 'update_expense' expense.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'delete_expense' expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    <div class="flex-container">
+    {% for expense in page_obj %}
+    <div class="expense-card">
+        <h4>{{ expense.title }}</h4>
+        <p><strong>Amount:</strong> {{ expense.amount }}</p>
+        <p><strong>Date:</strong> {{ expense.date }}</p>
+        <p><strong>Category:</strong> {{ expense.get_category_display }}</p>
+        <div>
+            <a href="{% url 'update_expense' expense.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'delete_expense' expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+    <div class="row">
+    {% for expense in page_obj %}
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ expense.title }}</h5>
+                <p class="card-text"><strong>Amount:</strong> ${{ expense.amount }}</p>
+                <p class="card-text"><strong>Date:</strong> {{ expense.date }}</p>
+                <p class="card-text"><strong>Category:</strong> {{ expense.get_category_display }}</p>
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'update_expense' expense.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_expense' expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+</nav>
+{% endblock %}
+</body>
+</html>

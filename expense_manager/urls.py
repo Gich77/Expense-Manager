@@ -4,7 +4,7 @@ from django.urls import path
 
 from expenses import views  # Assuming your app is named 'expenses'
 
-urlpatterns = {
+urlpatterns = [
 
     path('admin/', admin.site.urls),
 
@@ -17,4 +17,4 @@ urlpatterns = {
     path('expenses/<int:expense_id>/edit/', views.update_expense, name='update_expense'),
     path('expenses/<int:expense_id>/delete/', views.delete_expense, name='delete_expense'),
 
-}
+]

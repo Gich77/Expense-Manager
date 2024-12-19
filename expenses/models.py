@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Expense(models.Model):
-    objects = None
     CATEGORY_CHOICES = [
         ('FOOD', 'Food'),
         ('TRAVEL', 'Travel'),
@@ -11,7 +10,11 @@ class Expense(models.Model):
         ('OTHER', 'Other'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expenses")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="expenses"
+    )
     title = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
@@ -23,6 +26,17 @@ class Expense(models.Model):
 
     class Meta:
         ordering = ['-date']
+        
 
-
-
+class UserProfile(models.Model):
+    """
+    Extends the User model with additional fields.
+    """
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='userprofile'
+    )
+    
+    def __str__(self):
+        return self.user.username

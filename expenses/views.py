@@ -11,6 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def home(req): 
+    return render(req, 'base.html')
 
 def register(request):
     """Handle user registration."""
